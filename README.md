@@ -15,6 +15,33 @@ complete pipeline:
 Dataset → Validation → Training → Evaluation → Error Analysis →
 Model Comparison → ONNX Export → Benchmarking → FastAPI
 
+## Example Predictions
+
+The final YOLO11s model detects and classifies grocery products with
+bounding boxes and confidence scores.
+
+<p align="center">
+  <img src="results/examples/BEANS0001.png" width="45%">
+  <img src="results/examples/BEANS0037.png" width="45%">
+</p>
+
+<p align="center">
+  <img src="results/examples/BEANS0063.png" width="45%">
+  <img src="results/examples/BEANS0074.png" width="45%">
+</p>
+
+### Training Curves
+
+![YOLO11s training curves](results/yolo11s_final/results.png)
+
+### Validation Confusion Matrix
+
+![Confusion matrix](results/yolo11s_final/confusion_matrix_normalized.png)
+
+### Final Test Confusion Matrix
+
+![Final test confusion matrix](results/final_test/confusion_matrix_normalized.png)
+
 ## Dataset
 
 The project uses the 5K Groceries Object Detection Dataset, an extension

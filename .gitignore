@@ -26,3 +26,6 @@ outputs/
 
 # Dataset archives
 *.tar.gz
+
+# Ultralytics temporary runs
+runs/
