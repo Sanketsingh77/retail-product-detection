@@ -23,3 +23,6 @@ outputs/
 # Editor / OS
 .vscode/
 .DS_Store
+
+# Dataset archives
+*.tar.gz

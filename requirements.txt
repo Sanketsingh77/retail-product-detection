@@ -10,3 +10,9 @@ pyyaml
 tqdm
 jupyter
 ipykernel
+scikit-learn
+onnx
+onnxruntime
+fastapi
+uvicorn
+python-multipart
