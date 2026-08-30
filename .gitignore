@@ -29,3 +29,6 @@ outputs/
 
 # Ultralytics temporary runs
 runs/
+
+# Generated co-occurrence stress-test datasets
+results/cooccurrence_stress_test/seed_*/

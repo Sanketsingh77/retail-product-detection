@@ -146,6 +146,62 @@ The selected model was evaluated once on the previously untouched
 | mAP@0.50 | 0.917 |
 | mAP@0.50:0.95 | 0.797 |
 
+## Mixed-Class Co-occurrence Stress Test
+
+The source dataset has an unusual property: every image contains objects from
+only one semantic product class. Real retail scenes, however, often contain
+many different product categories in the same field of view.
+
+To test whether the final detector is sensitive to this difference, I created
+a controlled synthetic co-occurrence stress test using the frozen YOLO11s
+model.
+
+For each of three seeds (42, 43, 44), I sampled a balanced held-out pool of
+8 test images per class (200 source images). The same source images were then
+composed into 448x448 2x2 mosaics under two conditions:
+
+- **Same-class:** all four source images in a mosaic belonged to the same class.
+- **Mixed-class:** all four source images belonged to different classes.
+
+The original 224x224 images were not resized; they were placed directly into
+the four quadrants. Therefore, within each seed, the two conditions used the
+same source-image pool, object scale, canvas size, detector, and inference
+settings. Only the class co-occurrence grouping changed.
+
+### Results
+
+| Seed | Condition | Precision | Recall | mAP@50 | mAP@50:95 |
+|------|-----------|-----------|--------|--------|-----------|
+| 42 | Same | 0.929 | 0.902 | 0.959 | 0.840 |
+| 42 | Mixed | 0.875 | 0.826 | 0.907 | 0.791 |
+| 43 | Same | 0.927 | 0.896 | 0.965 | 0.849 |
+| 43 | Mixed | 0.864 | 0.833 | 0.921 | 0.807 |
+| 44 | Same | 0.920 | 0.878 | 0.957 | 0.831 |
+| 44 | Mixed | 0.869 | 0.790 | 0.898 | 0.774 |
+
+Across the three seeds, mixed-class composition reduced:
+
+- Precision by **0.056 ± 0.006**
+- Recall by **0.076 ± 0.013**
+- mAP@50 by **0.052 ± 0.008**
+- mAP@50:95 by **0.049 ± 0.008**
+
+The degradation was consistent across all three seeds. Recall showed the
+largest average decline, indicating that mixed-class scenes primarily caused
+more missed detections.
+
+The largest mean per-class mAP@50:95 drops included flour (-0.145), nuts
+(-0.128), pasta (-0.091), coffee (-0.082), and tea (-0.081). Several of these
+classes were also among the weaker or more confused categories in the original
+validation analysis.
+
+### Interpretation
+
+This experiment suggests that the detector is less robust when different
+known product categories co-occur within the same image, a condition that is
+not naturally represented in the source dataset.
+
+
 ## ONNX Export
 
 The final PyTorch checkpoint was exported to ONNX.
